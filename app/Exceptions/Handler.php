@@ -1,7 +1,5 @@
 <?php 
 
-// app/Exceptions/Handler.php
-
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;

@@ -9,7 +9,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    // run php artisan make:migration create_favorites_table --create=favorites
+
 
     public function up()
 {

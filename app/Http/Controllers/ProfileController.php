@@ -9,25 +9,24 @@ use Illuminate\Routing\Controller;
 
 class ProfileController extends Controller
 {
-    // Mostrar el perfil
+
     public function show()
     {
-        $user = Auth::user(); // Obtener el usuario autenticado
-        return view('profile.profile', compact('user'));  // Cambié 'show' a 'profile'
+        $user = Auth::user(); 
+        return view('profile.profile', compact('user')); 
     }
    
 
-    // Mostrar el formulario de edición del perfil
+    // edición del perfil
     public function edit()
     {
-        $user = Auth::user(); // Obtener el usuario autenticado
+        $user = Auth::user(); 
         return view('profile.edit', compact('user'));
     }
 
-    // Actualizar el perfil
     public function update(Request $request)
 {
-    $user = Auth::user(); // Obtener el usuario autenticado
+    $user = Auth::user(); 
 
     // Validar los datos del formulario
     $request->validate([
@@ -36,16 +35,16 @@ class ProfileController extends Controller
         'password' => 'nullable|string|min:8|confirmed', // Contraseña opcional
     ]);
 
-    // Actualizar los campos
+
     $user->name = $request->input('name');
     $user->email = $request->input('email');
 
-    // Si se proporciona una nueva contraseña, la actualizamos
+    // Si se proporciona una nueva contraseña
     if ($request->filled('password')) {
         $user->password = Hash::make($request->input('password'));
     }
 
-    // Guardamos los cambios en la base de datos
+
     $saved = $user->save(); 
 
     if ($saved) {
@@ -55,17 +54,16 @@ class ProfileController extends Controller
     }
 }
 
-// app/Http/Controllers/ProfileController.php
 
 public function showFavorites()
 {
-    // Obtener el usuario autenticado
+
     $user = Auth::user();
 
-    // Obtener los productos favoritos del usuario (con paginación)
+
     $favorites = $user->favorites()->paginate(5);
 
-    // Retornar la vista con los favoritos
+    // vista con los favoritos
     return view('profile.favorites', compact('favorites'));
 }
 

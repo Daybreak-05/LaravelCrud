@@ -1,5 +1,4 @@
 <?php
-// database/migrations/xxxx_xx_xx_xxxxxx_create_favorite_product_table.php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -7,6 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateFavoriteProductTable extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up()
     {
         Schema::create('favorite_product', function (Blueprint $table) {
@@ -16,6 +18,10 @@ class CreateFavoriteProductTable extends Migration
             $table->timestamps();
         });
     }
+
+    /**
+     * Reverse the migrations.
+     */
 
     public function down()
     {

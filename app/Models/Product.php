@@ -1,5 +1,5 @@
 <?php 
-// app/Models/Product.php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,12 +9,12 @@ class Product extends Model
 {
     use HasFactory;
 
-    // Definir los campos que se pueden asignar masivamente
+
     protected $fillable = [
         'name', 
         'description', 
         'price', 
-        'image',  // Asegúrate de incluir 'image'
+        'image', 
     ];
 
 

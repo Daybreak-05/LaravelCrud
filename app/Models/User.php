@@ -27,13 +27,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // Un usuario tiene un rol
     public function role()
     {
         return $this->belongsTo(Role::class);
     }
 
-    // Un usuario puede tener varios productos
     public function products()
     {
         return $this->hasMany(Product::class);
@@ -44,11 +42,9 @@ class User extends Authenticatable
         return $this->belongsToMany(Product::class, 'favorite_product');
     }
 
-    // app/Models/User.php
 
     public function favorites()
     {
-        // Relación many-to-many con productos (relación que asume que existe la tabla pivote 'favorites')
         return $this->belongsToMany(Product::class, 'favorites', 'user_id', 'product_id');
     }
 

@@ -1,4 +1,9 @@
 <?php 
+
+// Si no se crea el enlace simbólico, se puede hacer con el comando en la terminal
+//php artisan storage:link
+
+
 // app/Http/Controllers/ProductController.php
 namespace App\Http\Controllers;
 
@@ -10,8 +15,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
-    // Mostrar todos los productos
-// app/Http/Controllers/ProductController.php
 
 public function index(Request $request)
 {
@@ -22,7 +25,7 @@ public function index(Request $request)
         $query->where('name', 'like', '%' . $request->name . '%');
     }
 
-    // Filtro por precio (rango mínimo y máximo)
+    // Filtro por precio
     if ($request->has('min_price') && $request->min_price != '') {
         $query->where('price', '>=', $request->min_price);
     }
@@ -30,7 +33,7 @@ public function index(Request $request)
         $query->where('price', '<=', $request->max_price);
     }
 
-    // Filtro por categoría (si tienes una relación de categorías, lo agregarías aquí)
+    // Filtro por categoría
     if ($request->has('category') && $request->category != '') {
         $query->where('category', $request->category);
     }
@@ -54,13 +57,13 @@ public function index(Request $request)
     return view('products.index', compact('products'));
 }
 
-    // Mostrar el formulario para crear un producto
+
     public function create()
     {
         return view('products.create');
     }
 
-    // Almacenar un nuevo producto
+    // Almacenar un producto
     public function store(Request $request)
     {
         // Validación
@@ -81,11 +84,11 @@ public function index(Request $request)
         $product->name = $validated['name'];
         $product->description = $validated['description'];
         $product->price = $validated['price'];
-        $product->image = $imagePath;  // Guardamos la ruta de la imagen
+        $product->image = $imagePath;
         $product->user_id = auth()->id();
         $product->save();
 
-        // Redirigir a la lista de productos con un mensaje de éxito
+
         return redirect()->route('products.index')->with('success', 'Producto creado exitosamente.');
     }
 
@@ -95,8 +98,6 @@ public function index(Request $request)
         $product = Product::findOrFail($id);
         return view('products.show', compact('product'));
     }
-
-    // app/Http/Controllers/ProductController.php
 
 // Marcar como favorito
 public function addToFavorites($id)

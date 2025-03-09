@@ -9,7 +9,6 @@ class Role extends Model
 
     protected $fillable = ['name'];
 
-    // Un rol puede tener muchos usuarios
     public function users()
     {
         return $this->hasMany(User::class);
