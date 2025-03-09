@@ -23,5 +23,10 @@ public function favoritedBy()
     return $this->belongsToMany(User::class, 'favorite_product');
 }
 
+public function comments() {
+    return $this->hasMany(Comment::class);
+}
+
+
 }
 ?>

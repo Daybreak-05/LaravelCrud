@@ -8,6 +8,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\CommentController;
+
 
 
 
@@ -40,6 +42,11 @@ Route::get('/error-417', function () {abort(417);
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::post('/contact', [PageController::class, 'sendContact'])->name('contact.send');
+
+
+Route::post('/products/{product}/comments', [CommentController::class, 'store'])->name('comments.store')->middleware('auth');
+Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy')->middleware('auth');
+
 
 Auth::routes();
 
