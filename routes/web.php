@@ -29,6 +29,17 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/product/{id}/remove-favorite', [ProductController::class, 'removeFromFavorites'])->name('product.removeFavorite');
     Route::get('/profile/favorites', [ProfileController::class, 'showFavorites'])->name('profile.favorites');
     Route::post('/products/{id}/add-to-favorites', [ProductController::class, 'addToFavorites'])->name('products.addToFavorites');
+    Route::post('/products/{product}/pending', [ProductController::class, 'markAsPending'])
+    ->name('products.pending')
+    ->middleware('auth');
+    Route::get('/about', [PageController::class, 'about'])->name('about');
+    Route::get('/contact', [PageController::class, 'contact'])->name('contact');
+    Route::post('/contact', [PageController::class, 'sendContact'])->name('contact.send');
+
+
+    Route::post('/products/{product}/comments', [CommentController::class, 'store'])->name('comments.store')->middleware('auth');
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy')->middleware('auth');
+
 });
 
 Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
@@ -39,13 +50,6 @@ Route::post('reset-password', [ResetPasswordController::class, 'reset'])->name('
 Route::get('/error-417', function () {abort(417);
 });
 
-Route::get('/about', [PageController::class, 'about'])->name('about');
-Route::get('/contact', [PageController::class, 'contact'])->name('contact');
-Route::post('/contact', [PageController::class, 'sendContact'])->name('contact.send');
-
-
-Route::post('/products/{product}/comments', [CommentController::class, 'store'])->name('comments.store')->middleware('auth');
-Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy')->middleware('auth');
 
 
 Auth::routes();
@@ -55,3 +59,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+

@@ -124,5 +124,16 @@ public function addToFavorites($id)
     }
 
 
+    public function markAsPending(Product $product) {
+        if (Auth::id() === $product->user_id) {
+            return redirect()->back()->with('error', 'No puedes marcar tu propio producto como pendiente de compra.');
+        }
+    
+        $product->interested_user_id = Auth::id();
+        $product->save();
+    
+        return redirect()->back()->with('success', 'Has marcado este producto como pendiente de compra.');
+    }
+    
 }
 ?>

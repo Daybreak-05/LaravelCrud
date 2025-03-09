@@ -7,30 +7,32 @@
             <div class="row">
                 <div class="col-md-6">
                     <!-- Imagen del producto -->
+                    @if($product->image)
                     <img src="{{ asset('storage/' . $product->image) }}" class="img-fluid" alt="{{ $product->name }}">
+    
+                    @endif
                 </div>
                 <div class="col-md-6">
                     <!-- Información del producto -->
                     <h2>{{ $product->name }}</h2>
                     <p><strong>Descripción:</strong> {{ $product->description }}</p>
-                    <p><strong>Precio:</strong> ${{ number_format($product->price, 2) }}</p>
+                    <p><strong>Precio:</strong> ${{ $product->price }}</p>
+                    <p><strong>Publicado por:</strong> {{ $product->owner->name }}</p>
 
-                    <!-- Formulario para agregar a favoritos -->
-                    @auth
-                        <form action="{{ route('products.addToFavorites', $product->id) }}" method="POST">
-                            @csrf
-                            @if (Auth::user()->favorites->contains($product->id))
-                            <button type="submit" class="btn btn-danger">
-                                Eliminar de favoritos
-                                @else
-                                <button type="submit" class="btn btn-success">
-                                    Agregar a favoritos
-                                @endif
-                            </button>
-                        </form>
-                    @endauth
-                </div>
-            </div>
+
+                    @if($product->interested_user_id)
+                        <p><strong>Interesado en comprar:</strong> {{ $product->interestedUser->name }}</p>
+                    @else
+                        @auth
+                            @if(Auth::id() !== $product->user_id)
+                                <form action="{{ route('products.pending', $product) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="btn btn-warning">Marcar como pendiente de compra</button>
+                                </form>
+                            @endif
+                        @endauth
+                    @endif
+
 
             <!-- Botón para volver a la lista de productos -->
             <div class="mt-4">
