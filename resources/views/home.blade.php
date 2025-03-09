@@ -14,7 +14,8 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    {{ __('La sesión se ha inciado correctamente, puedes usar la app') }}
+                    <a href="{{ route('products.index') }}" class="btn btn-primary">Entrar</a>
                 </div>
             </div>
         </div>

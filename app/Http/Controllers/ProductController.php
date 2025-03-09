@@ -9,11 +9,48 @@ use Illuminate\Support\Facades\Storage;
 class ProductController extends Controller
 {
     // Mostrar todos los productos
-    public function index()
-    {
-        $products = Product::paginate(5);  // Puedes usar paginación si lo prefieres
-        return view('products.index', compact('products'));
+// app/Http/Controllers/ProductController.php
+
+public function index(Request $request)
+{
+    $query = Product::query();
+
+    // Filtro por nombre del producto
+    if ($request->has('name') && $request->name != '') {
+        $query->where('name', 'like', '%' . $request->name . '%');
     }
+
+    // Filtro por precio (rango mínimo y máximo)
+    if ($request->has('min_price') && $request->min_price != '') {
+        $query->where('price', '>=', $request->min_price);
+    }
+    if ($request->has('max_price') && $request->max_price != '') {
+        $query->where('price', '<=', $request->max_price);
+    }
+
+    // Filtro por categoría (si tienes una relación de categorías, lo agregarías aquí)
+    if ($request->has('category') && $request->category != '') {
+        $query->where('category', $request->category);
+    }
+
+    // Ordenar por precio o fecha
+    if ($request->has('sort_by')) {
+        $sortBy = $request->sort_by;
+        $sortDirection = $request->has('sort_direction') ? $request->sort_direction : 'asc';
+        
+        if ($sortBy == 'price') {
+            $query->orderBy('price', $sortDirection);
+        } else if ($sortBy == 'created_at') {
+            $query->orderBy('created_at', $sortDirection);
+        }
+    }
+
+    // Paginación (5, 10 o todos los productos)
+    $perPage = $request->has('per_page') ? $request->per_page : 10;
+    $products = $query->paginate($perPage);
+
+    return view('products.index', compact('products'));
+}
 
     // Mostrar el formulario para crear un producto
     public function create()

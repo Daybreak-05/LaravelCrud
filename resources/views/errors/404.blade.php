@@ -11,7 +11,7 @@
                     </div>
                     <div class="card-body">
                         <p>La página que buscas no existe o ha sido movida. Asegúrate de que la URL esté correcta.</p>
-                        <a href="{{ route('home') }}" class="btn btn-primary">Volver al inicio</a>
+                        <a href="{{ route('home') }}" class="btn btn-primary">¡LLévame de vuelta!</a>
                     </div>
                 </div>
             </div>
