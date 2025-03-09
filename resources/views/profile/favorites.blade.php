@@ -1,5 +1,3 @@
-<!-- resources/views/profile/favorites.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
