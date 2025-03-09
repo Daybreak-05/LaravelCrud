@@ -55,4 +55,19 @@ class ProfileController extends Controller
     }
 }
 
+// app/Http/Controllers/ProfileController.php
+
+public function showFavorites()
+{
+    // Obtener el usuario autenticado
+    $user = Auth::user();
+
+    // Obtener los productos favoritos del usuario (con paginación)
+    $favorites = $user->favorites()->paginate(5);
+
+    // Retornar la vista con los favoritos
+    return view('profile.favorites', compact('favorites'));
+}
+
+
 }

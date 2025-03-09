@@ -6,6 +6,11 @@
     <div class="container">
         <h1>Listado de Productos</h1>
 
+        <!-- crear -->
+        <div class="col-md-2 mb-5 mt-5">
+            <a href="{{ route('products.create') }}" class="btn btn-success">Crear Producto</a>
+        </div>
+
         <!-- Filtros y Ordenación -->
         <form method="GET" action="{{ route('products.index') }}">
             <div class="row mb-3">
@@ -38,8 +43,10 @@
                     </select>
                 </div>
 
+                
+
                 <!-- Paginación -->
-                <div class="col-md-2">
+                <div class="col-md-2 mt-3">
                     <select name="per_page" class="form-control">
                         <option value="5" {{ request('per_page') == '5' ? 'selected' : '' }}>5 por página</option>
                         <option value="10" {{ request('per_page') == '10' ? 'selected' : '' }}>10 por página</option>
@@ -48,7 +55,7 @@
                     </select>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-2 mt-3">
                     <button type="submit" class="btn btn-primary">Filtrar</button>
                 </div>
             </div>

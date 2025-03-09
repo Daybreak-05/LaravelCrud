@@ -38,4 +38,18 @@ class User extends Authenticatable
     {
         return $this->hasMany(Product::class);
     }
+
+    public function favoriteProducts()
+    {
+        return $this->belongsToMany(Product::class, 'favorite_product');
+    }
+
+    // app/Models/User.php
+
+    public function favorites()
+    {
+        // Relación many-to-many con productos (relación que asume que existe la tabla pivote 'favorites')
+        return $this->belongsToMany(Product::class, 'favorites', 'user_id', 'product_id');
+    }
+
 }

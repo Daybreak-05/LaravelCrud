@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+
 
 class ProductController extends Controller
 {
@@ -93,5 +95,33 @@ public function index(Request $request)
         $product = Product::findOrFail($id);
         return view('products.show', compact('product'));
     }
+
+    // app/Http/Controllers/ProductController.php
+
+// Marcar como favorito
+public function addToFavorites($id)
+{
+    $user = Auth::user();
+    $product = Product::find($id);
+
+    // Verifica si el producto no está ya en los favoritos
+    if ($product) {
+        $user->favorites()->toggle($product->id);  // toggle añade o elimina el producto
+        return redirect()->back()->with('success', 'Producto agregado a favoritos.');
+    } else {
+        return redirect()->back()->with('error', 'Producto no encontrado.');
+    }
+}
+
+    // Quitar de favoritos
+    public function removeFromFavorites($id)
+    {
+        $product = Product::findOrFail($id);
+        auth()->user()->favoriteProducts()->detach($product); // Quitar el producto de los favoritos
+
+        return redirect()->back()->with('success', 'Producto eliminado de tus favoritos.');
+    }
+
+
 }
 ?>

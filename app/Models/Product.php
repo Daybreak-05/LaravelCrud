@@ -16,5 +16,12 @@ class Product extends Model
         'price', 
         'image',  // Asegúrate de incluir 'image'
     ];
+
+
+public function favoritedBy()
+{
+    return $this->belongsToMany(User::class, 'favorite_product');
+}
+
 }
 ?>
